@@ -104,7 +104,6 @@ public class BaseModel extends Model {
         modelFields.addField(timeoutRestart);
         modelFields.addField(backupConfigDays);
         modelFields.addField(newRpc);
-        modelFields.addField(newRpc);
         modelFields.addField(debugMode);
         modelFields.addField(rpcRequestList);
         modelFields.addField(rpcRequestTaskList);

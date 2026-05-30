@@ -21,7 +21,7 @@ android {
     compileSdk 34
     namespace 'io.github.lazyimmortal.sesame'
     defaultConfig {
-        applicationId "io.github.lazyimmortal.sesame"
+        applicationId "io.github.lazyimmortal.sesame.mod"// 包名
         minSdk 21
         //noinspection ExpiredTargetSdkVersion
         targetSdk 34
@@ -52,6 +52,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -71,8 +72,7 @@ android {
 }
 
 dependencies {
-    //noinspection GradleCompatible
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     compileOnly 'de.robv.android.xposed:api:82'
     compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.32'
