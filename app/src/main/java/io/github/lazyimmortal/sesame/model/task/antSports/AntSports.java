@@ -799,13 +799,17 @@ public class AntSports extends ModelTask {
         if (pathId != null) {
             return pathId;
         }
-        
+
         try {
-            String themeId = WalkPathTheme.walkPathThemeIds[walkPathTheme.getValue()];
-            JSONObject theme = queryWorldMap(themeId);
-            if (theme == null) {
-                return pathId;
-            }
+            int startTheme = walkPathTheme.getValue();
+            String[] themeIds = WalkPathTheme.walkPathThemeIds;
+            String[] themeNames = WalkPathTheme.nickNames;
+            for (int t = 0; t < themeIds.length; t++) {
+                int idx = (startTheme + t) % themeIds.length;
+                JSONObject theme = queryWorldMap(themeIds[idx]);
+                if (theme == null) {
+                    continue;
+                }
             JSONArray cityList = theme.getJSONArray("cityList");
             for (int i = 0; i < cityList.length(); i++) {
                 String cityId = cityList.getJSONObject(i).getString("cityId");
@@ -822,9 +826,13 @@ public class AntSports extends ModelTask {
                     pathId = cityPath.getString("pathId");
                     String pathCompleteStatus = cityPath.getString("pathCompleteStatus");
                     if (!PathCompleteStatus.COMPLETED.name().equals(pathCompleteStatus)) {
+                        if (t > 0) {
+                            Log.record("行走路线🚶🏻‍♂️主题[" + themeNames[startTheme] + "]已完成，自动切换到[" + themeNames[idx] + "]");
+                        }
                         return pathId;
                     }
                 }
+            }
             }
         }
         catch (Throwable t) {
