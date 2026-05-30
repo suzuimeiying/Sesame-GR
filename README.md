@@ -1,4 +1,4 @@
-欢迎加入QQ群交流：694474777(因人数快接近2000，需QQ大于64级，满员需要排队)。群宗旨：为了大家能比差不多条件的身边人跑得快一些，本群成员和平相处。我的目的是提供一个平台，大家互帮互助，使大家能节省一些时间和精力，我也希望和别的辅助共存，可以随便讨论和宣传别的辅助，毕竟有更新快的大家就可以用，我慢慢修补，让基础功能尽量稳定，请不要拿去赚钱，我也不是为了钱，我还为了建大群要开会员，我2024年底自学了Java觉得还有趣，为了学习研究解放自己的双手，希望不要给我挖坑，只要大家觉得这家伙还是做了点事情就足够了。我的技术没有那么丰富，可能很多问题都无法解答，也希望在群里面的大佬多帮助不懂的小白，让大家都过上开挂的人生。项目主要得益于懒真人给延长了编译寿命，才有现在能继续使用芝麻粒1.6.4.2，整个芝麻粒也是在很多前人的付出才有了今天这个样。从懒真人芝麻粒-TK v1.6.4.2(https://github.com/LazyImmortal/Sesame) 之后，修复了一些失效的功能，并根据芝你麻咸鱼的粒-TK(https://github.com/Fansirsqi/Sesame-TK) 的代码补充一些新功能。本项目开源代码地址：https://github.com/Dragon813/Sesame-GR。
+从@Dragon813芝麻粒-GR v1.8.4(https://github.com/Dragon813/Sesame-GR) 之后，新增了一些功能。
 # Sesame
 
 [![License](https://img.shields.io/github/license/LazyImmortal/Sesame.svg)](LICENSE)
@@ -32,7 +32,7 @@
 6. 本APP如无意中侵犯了某个媒体或个人的知识产权，请来信或来电告之，作者将立即删除。
 
 ## 授权说明
-本项目基于 [TKaxv-7S版Sesame](https://github.com/TKaxv-7S/Sesame-TK)、[constanline版XQuickEnergy](https://github.com/constanline/XQuickEnergy) 与 [pansong291版XQuickEnergy](https://github.com/pansong291/XQuickEnergy) 开发
+本项目基于[芝麻粒-GR 1.8.4](https://github.com/Dragon813/Sesame-GR) 、[TKaxv-7S版Sesame](https://github.com/TKaxv-7S/Sesame-TK)、[constanline版XQuickEnergy](https://github.com/constanline/XQuickEnergy) 与 [pansong291版XQuickEnergy](https://github.com/pansong291/XQuickEnergy) 开发
 
 遵循 GPLv3 协议，并**禁止**用于任何商业用途、禁止二次修改后**闭源**发布
 
@@ -46,10 +46,13 @@
 - 鉴于项目的特殊性，开发团队可能在任何时间**停止更新**或**删除项目**
 
 ## 特别感谢
+- 感谢各位大佬们的贡献,我也是站在巨人的肩膀上小试牛刀
+- 感谢  [@Dragon813](https://github.com/Dragon813) 维护
 - 感谢 这个项目的上一位维护者 [@TKaxv-7S](https://github.com/TKaxv-7S) 重构项目代码
 - 感谢 [@wh-990624](https://github.com/wh-990624) 重构并开发新UI
 - 感谢 ༒激༙྇流༙྇泉༙྇༒ 重新设计新UI
 - 感谢 更早的项目维护者 [@constanline](https://github.com/constanline) 、 [@pansong291](https://github.com/pansong291) 与其他维护者们的无私奉献
+- 感谢 52pojie @jiangwei212 先导者
 
 ## 贡献者们
 

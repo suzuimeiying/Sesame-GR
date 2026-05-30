@@ -21,7 +21,7 @@ android {
     compileSdk 34
     namespace 'io.github.lazyimmortal.sesame'
     defaultConfig {
-        applicationId "io.github.lazyimmortal.sesame.mod"// 包名
+        applicationId "io.github.lazyimmortal.sesame.zk"// 包名
         minSdk 21
         //noinspection ExpiredTargetSdkVersion
         targetSdk 34
