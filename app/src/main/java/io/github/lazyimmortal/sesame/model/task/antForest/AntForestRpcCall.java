@@ -834,4 +834,15 @@ public class AntForestRpcCall {
         String args = "[{\"queryBizType\":\"" + queryBizType + "\",\"source\":\"SELF_HOME\",\"targetUserId\":\"" + teamId + "\",\"version\":\"" + VERSION + "\"}]";
         return ApplicationHook.requestString("alipay.antforest.forest.h5.queryMiscInfo", args);
     }
+
+    /* 1v1能量赛 */
+    public static String queryPvpHomeInfo() {
+        String args = "[{\"queryWaitToReceive\":true,\"source\":\"chInfo_ch_appcenter__chsub_9patch\"}]";
+        return ApplicationHook.requestString("alipay.antforest.forest.h5.queryPvpHomeInfo", args);
+    }
+
+    public static String receivePvpRewards() {
+        String args = "[{\"source\":\"chInfo_ch_appcenter__chsub_9patch\"}]";
+        return ApplicationHook.requestString("alipay.antforest.forest.h5.receivePvpRewards", args);
+    }
 }

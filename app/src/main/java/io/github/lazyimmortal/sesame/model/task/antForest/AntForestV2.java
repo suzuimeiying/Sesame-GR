@@ -165,6 +165,8 @@ public class AntForestV2 extends ModelTask {
     private BooleanModelField balanceNetworkDelay;
     //PK能量
     private BooleanModelField pkEnergy;
+    //1v1能量赛
+    private BooleanModelField pvp1v1Energy;
     private ChoiceModelField whackModeName;
     private IntegerModelField whackModeGames;
     private IntegerModelField whackModeCount;
@@ -258,6 +260,7 @@ public class AntForestV2 extends ModelTask {
         modelFields.addField(batchRobEnergy = new BooleanModelField("batchRobEnergy", "一键收取", false));
         modelFields.addField(dontCollectList = new SelectModelField("dontCollectList", "不收取能量列表", new LinkedHashSet<>(), AlipayUser::getList));
         modelFields.addField(pkEnergy = new BooleanModelField("pkEnergy", "Pk榜收取 | 开关", false));
+        modelFields.addField(pvp1v1Energy = new BooleanModelField("pvp1v1Energy", "1v1能量赛 | 自动领取奖励", false));
         modelFields.addField(collectWateringBubble = new BooleanModelField("collectWateringBubble", "收取金球", false));
         modelFields.addField(wateredFriendList = new SelectAndCountModelField("wateredFriendList", "统计 | 应被好友浇水", new LinkedHashMap<>(), AlipayUser::getList, "请填写被浇水次数(用于核对金球)"));
         modelFields.addField(collectRobExpandEnergy = new IntegerModelField("collectRobExpandEnergy", "额外能量领取(大于该值收取)", 100, 0, 1000000));
@@ -571,6 +574,9 @@ public class AntForestV2 extends ModelTask {
                 if (pkEnergy.getValue()) {
                     collectPKEnergy();
                 }
+                if (pvp1v1Energy.getValue()) {
+                    collectPvp1v1Reward();
+                }
                 
                 // 组队合种浇水
                 //if (partnerteamWater.getValue()) {
@@ -862,6 +868,53 @@ public class AntForestV2 extends ModelTask {
         }
     }
     
+    private void collectPvp1v1Reward() {
+        try {
+            JSONObject pvpObject = new JSONObject(AntForestRpcCall.queryPvpHomeInfo());
+            if (!MessageUtil.checkResultCode(TAG + "查询1v1能量赛失败:", pvpObject)) {
+                Log.error("查询1v1能量赛失败: " + pvpObject.optString("resultDesc"));
+                return;
+            }
+            int waitToReceiveRecordCount = pvpObject.optInt("waitToReceiveRecordCount", 0);
+            int waitToReceiveRewardCount = pvpObject.optInt("waitToReceiveRewardCount", 0);
+            JSONObject battleRecord = pvpObject.optJSONObject("currentEnergyPvpBattleRecord");
+            if (battleRecord != null) {
+                String battleStatus = battleRecord.optString("battleStatus", "");
+                String attackerName = battleRecord.optString("attackerDisplayName", "");
+                String defenderName = battleRecord.optString("defenderDisplayName", "");
+                int attackerEnergy = battleRecord.optInt("attackerEnergy", 0);
+                int defenderEnergy = battleRecord.optInt("defenderEnergy", 0);
+                int leftSeconds = battleRecord.optInt("leftSeconds", 0);
+                Log.record("1v1能量赛: " + attackerName + "(" + attackerEnergy + "g) vs " + defenderName + "(" + defenderEnergy + "g) 状态:" + battleStatus + " 剩余:" + (leftSeconds / 3600) + "小时");
+            }
+            if (waitToReceiveRecordCount > 0) {
+                Log.record("1v1能量赛: 有" + waitToReceiveRecordCount + "场对战待领取, " + waitToReceiveRewardCount + "个奖励待领取, 开始领取...");
+                JSONObject rewardResult = new JSONObject(AntForestRpcCall.receivePvpRewards());
+                if (MessageUtil.checkResultCode(TAG + "领取1v1能量赛奖励失败:", rewardResult)) {
+                    JSONArray receivedRewards = rewardResult.optJSONArray("receivedRewards");
+                    if (receivedRewards != null && receivedRewards.length() > 0) {
+                        for (int i = 0; i < receivedRewards.length(); i++) {
+                            JSONObject reward = receivedRewards.getJSONObject(i);
+                            Log.record("1v1能量赛: 领取成功 " + reward.optString("rewardName", "") + " " + reward.optInt("energy", 0) + "g");
+                        }
+                    }
+                    else {
+                        Log.record("1v1能量赛: 领取成功");
+                    }
+                }
+                else {
+                    Log.error("领取1v1能量赛奖励失败: " + rewardResult.optString("resultDesc"));
+                }
+            }
+            else if (battleRecord == null) {
+                Log.record("1v1能量赛: 当前无对战记录");
+            }
+        }
+        catch (Exception e) {
+            Log.printStackTrace(TAG, e);
+        }
+    }
+
     private void notifyMain() {
         if (taskCount.decrementAndGet() < 1) {
             synchronized (AntForestV2.this) {
